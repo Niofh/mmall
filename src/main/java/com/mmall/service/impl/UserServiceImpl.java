@@ -30,6 +30,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      * @return
      */
+    @Override
     public ServerResponse<User> login(User user) {
 
         // 条件查询
@@ -37,25 +38,26 @@ public class UserServiceImpl implements IUserService {
 
         UserExample.Criteria criteria = userExample.createCriteria();
 
+        // 先查询用户名是否正确
         criteria.andUsernameEqualTo(user.getUsername());
         List<User> users = userMapper.selectByExample(userExample);
-        User u = users.get(0);
 
-        if (u == null) {
+        if (users.size() == 0) {
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
 
 
-        // todo md5加密密码验证
+        // md5加密密码验证，查询用户密码是否正确
         criteria.andPasswordEqualTo(MD5Util.MD5EncodeUtf8(user.getPassword()));
         users = userMapper.selectByExample(userExample);
 
-        u = users.get(0);
-
-        if (u == null) {
+        if (users.size() == 0) {
             return ServerResponse.createByErrorMessage("用户密码错误");
+        } else {
+            User u = users.get(0);
+            u.setPassword(null);
+            return ServerResponse.createBySuccess("登录成功", u);
         }
 
-        return ServerResponse.createBySuccess("登录成功", u);
     }
 }
