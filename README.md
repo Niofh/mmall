@@ -5,6 +5,10 @@
 
 2. 去掉xml底色问题 https://blog.csdn.net/qq_31156277/article/details/77802767 
 
+3. 拦截器 interceptor 是针对Controller 层
+
+4. Aop 是针对Service层
+
 
 ### 慕课网mmall从零开发 V1.0
 

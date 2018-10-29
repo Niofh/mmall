@@ -60,6 +60,17 @@
         <property name="defaultEncoding" value="UTF-8"></property>
     </bean>
 
+
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <!-- 多个拦截器，顺序执行 -->
+        <mvc:interceptor>
+            <!-- /**表示所有url包括子url路径 -->
+            <mvc:mapping path="/**"/>
+            <bean class="com.mmall.interceptor.UrlInterceptor"/>
+        </mvc:interceptor>
+
+    </mvc:interceptors>
     <!--全局拦截-->
 <!--    <mvc:interceptors>
         <mvc:interceptor>

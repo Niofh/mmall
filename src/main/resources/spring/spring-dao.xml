@@ -24,10 +24,13 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     	<!-- 注入数据源 -->
     	<property name="dataSource" ref="dataSource"/>
+
     	<!-- 扫描mybatis核心配置文件 -->
     	<property name="configLocation" value="classpath:spring/mybatis.xml"/>
+
     	<!-- 扫描java bean，自动使用别名 pojo -->
     	<property name="typeAliasesPackage" value="com.mmall.pojo"/>
+
     	<!-- 扫描mybatis的SQL配置文件 -->
     	<property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
@@ -63,7 +66,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		</tx:attributes>
 	</tx:advice>
 
-	<!-- 切面 执行回滚ervice类的所有方法-->
+	<!-- 切面 执行回滚service类的所有方法-->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice"
 					 pointcut="execution(* com.mmall.service.*.*(..))" />
