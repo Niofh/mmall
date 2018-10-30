@@ -20,5 +20,10 @@
    
     git push origin HEAD -u
     
+3. mysql5.7以上问题
+
+    * [解决：ONLY_FULL_GROUP_BY](https://blog.csdn.net/qq_34707744/article/details/78031413)
+    * [解决：my.ini配置](https://www.jb51.net/article/127627.htm)
+    * [mysql5.7详细教程](https://www.cnblogs.com/renjianjun/p/9016286.html)
     
     
