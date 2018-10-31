@@ -33,6 +33,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      * @return
      */
+    @Override
     public ServerResponse<User> login(User user) {
 
         // 条件查询
@@ -68,6 +69,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      * @return
      */
+    @Override
     public ServerResponse<String> addUser(User user) {
 
         // 判断用户名是否存在
@@ -101,6 +103,7 @@ public class UserServiceImpl implements IUserService {
      *
      * @return
      */
+    @Override
     public ServerResponse<String> checkValid(String str, String type) {
         if (StringUtils.isNoneBlank(type)) {
             // 条件查询

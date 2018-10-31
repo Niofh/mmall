@@ -4,9 +4,12 @@ import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,12 +19,14 @@ import javax.servlet.http.HttpSession;
  * @Date: 2018/10/30 17:14
  */
 @RequestMapping("/manage/user")
-public class UserController {
+@Controller
+public class UserManageController {
 
     @Autowired
     private IUserService iUserService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @ResponseBody
     public ServerResponse<User> login(User user, HttpSession httpSession) {
         ServerResponse<User> userServerResponse = iUserService.login(user);
         if (!userServerResponse.isSuccess()) {
@@ -31,9 +36,10 @@ public class UserController {
 
         if (role.equals(Const.Roles.ROLE_ADMIN)) {
             //说明登录的是管理员
-            httpSession.setAttribute(Const.CURRENT_USER, user);
+            httpSession.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
+            System.out.println(httpSession.getAttribute(Const.CURRENT_USER));
             return userServerResponse;
         }
-        return ServerResponse.createByErrorMessage("你不是管理员");
+        return ServerResponse.createByErrorMessage("该用户不是管理员,无法有访问权限");
     }
 }
