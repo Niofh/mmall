@@ -37,7 +37,6 @@ public class UserManageController {
         if (role.equals(Const.Roles.ROLE_ADMIN)) {
             //说明登录的是管理员
             httpSession.setAttribute(Const.CURRENT_USER, userServerResponse.getData());
-            System.out.println(httpSession.getAttribute(Const.CURRENT_USER));
             return userServerResponse;
         }
         return ServerResponse.createByErrorMessage("该用户不是管理员,无法有访问权限");

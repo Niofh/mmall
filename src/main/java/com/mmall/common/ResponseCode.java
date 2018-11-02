@@ -9,7 +9,7 @@ public enum ResponseCode {
     SUCCESS(0,"SUCCESS"), // 请求成功
     ERROR(1,"ERROR"), // 请求失败
     NEED_LOGIN(10,"NEED_LOGIN"), // 没有登录状态，需要强制登录
-    ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT");
+    ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT"); // 传递参数错误
 
     private final int code;
     private final String desc;

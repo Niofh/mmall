@@ -21,7 +21,7 @@ public class CategoryManageController {
 
 
 
-    @RequestMapping(value="/add_category",method = RequestMethod.POST)
+    @RequestMapping(value="/add_category")
     @ResponseBody
     public ServerResponse addCateGory(String categoryName, @RequestParam(value = "parentId",defaultValue = "0") Integer parentId) {
 
@@ -30,7 +30,7 @@ public class CategoryManageController {
 
 
 
-    @RequestMapping(value="/set_category_name",method = RequestMethod.POST)
+    @RequestMapping(value="/set_category_name")
     @ResponseBody
     public ServerResponse updateCateGory(String categoryName, Integer categoryId) {
 
@@ -39,14 +39,14 @@ public class CategoryManageController {
 
     /**
      * 获取平级的品类节点
-     * @param parentId 父亲品类id
+     * @param categoryId 父亲品类id
      * @return
      */
-    @RequestMapping(value="/get_category",method = RequestMethod.POST)
+    @RequestMapping(value="/get_category",method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<List<Category>> getCateGory(Integer parentId) {
+    public ServerResponse<List<Category>> getCateGory(Integer categoryId) {
 
-        return iCategoryService.getCateGoryByParentId(parentId);
+        return iCategoryService.getCateGoryByParentId(categoryId);
     }
 
     /**

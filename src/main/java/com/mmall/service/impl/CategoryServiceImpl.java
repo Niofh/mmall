@@ -1,5 +1,6 @@
 package com.mmall.service.impl;
 
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
 import com.mmall.pojo.Category;
@@ -20,6 +21,14 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public ServerResponse addCategory(String categoryName, Integer parentId) {
+
+        if (categoryName == null || parentId == null) {
+
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+
+        }
+
+
         Category category = new Category();
 
         category.setParentId(parentId);
@@ -38,6 +47,12 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public ServerResponse updateCateGory(String categoryName, Integer categoryId) {
 
+        if (categoryName == null || categoryId == null) {
+
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+
+        }
+
         Category category = new Category();
 
         category.setName(categoryName);
@@ -54,6 +69,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public ServerResponse<List<Category>> getCateGoryByParentId(Integer parentId) {
+        if (parentId == null) {
+
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+
+        }
 
         CategoryExample categoryExample = new CategoryExample();
         categoryExample.createCriteria().andParentIdEqualTo(parentId);
@@ -64,6 +84,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public ServerResponse<List<Integer>> getDeepCateGory(Integer categoryId) {
+        if (categoryId == null) {
+
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+
+        }
 
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
 
