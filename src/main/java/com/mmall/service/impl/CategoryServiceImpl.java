@@ -7,6 +7,7 @@ import com.mmall.pojo.Category;
 import com.mmall.pojo.CategoryExample;
 import com.mmall.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class CategoryServiceImpl implements ICategoryService {
             return ServerResponse.createByErrorMessage("没有此分类");
         }
 
-        ArrayList<Category> categoryArrayList = new ArrayList<>();
+        ArrayList<Category> categoryArrayList = new ArrayList<Category>();
 
         categoryArrayList.add(category);
 
