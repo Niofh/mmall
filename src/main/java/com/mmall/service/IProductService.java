@@ -56,6 +56,15 @@ public interface IProductService {
     ServerResponse<ProductVo> getProductById(Integer productId);
 
 
+    /**
+     * 根据id查看商品 前台展示
+     * @param productId
+     * @return
+     */
+    ServerResponse<ProductWithBLOBs> getPortalProductById(Integer productId);
+
+
+
 
 
 }

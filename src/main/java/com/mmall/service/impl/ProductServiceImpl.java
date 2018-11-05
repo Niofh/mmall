@@ -2,6 +2,8 @@ package com.mmall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mmall.common.Const;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
 import com.mmall.dao.ProductMapper;
@@ -111,22 +113,46 @@ public class ProductServiceImpl implements IProductService {
      */
     @Override
     public ServerResponse<ProductVo> getProductById(Integer productId) {
-        Pro ductWithBLOBs productWithBLOBs = productMapper.selectByPrimaryKey(productId);
+
+        if (productId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        ProductWithBLOBs productWithBLOBs = productMapper.selectByPrimaryKey(productId);
         if (productWithBLOBs == null) {
             return ServerResponse.createByError();
         }
 
         ProductVo productVo = new ProductVo();
 
-        BeanUtils.copyProperties(productWithBLOBs,productVo);
+        BeanUtils.copyProperties(productWithBLOBs, productVo);
 
         // 根据分类id查询分类对象
         Category category = categoryMapper.selectByPrimaryKey(productVo.getCategoryId());
 
-        if(category!=null){
+        if (category != null) {
             productVo.setParentCategoryId(category.getParentId());
         }
 
         return ServerResponse.createBySuccess(productVo);
+    }
+
+    @Override
+    public ServerResponse<ProductWithBLOBs> getPortalProductById(Integer productId) {
+        if (productId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        ProductWithBLOBs productWithBLOBs = productMapper.selectByPrimaryKey(productId);
+        if (productWithBLOBs == null) {
+            return ServerResponse.createByErrorMessage("商品不存在");
+        }
+
+        if (productWithBLOBs.getStatus() != Const.ProductStatusEnum.ON_SALE.getCode()) {
+            return ServerResponse.createByErrorMessage("商品已下架或者已删除");
+        }
+
+
+        return ServerResponse.createBySuccess(productWithBLOBs);
     }
 }
