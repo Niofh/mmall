@@ -16,8 +16,10 @@ import com.mmall.vo.ProductVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +36,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Value("${file_server_addr}")
+    private String fileAddress;
 
     @Override
     public ServerResponse<PageInfo> getProductList(Integer pageNum, Integer pageSize) {
@@ -138,7 +143,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ServerResponse<ProductWithBLOBs> getPortalProductById(Integer productId) {
+    public ServerResponse<ProductVo> getPortalProductById(Integer productId) {
         if (productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
@@ -152,8 +157,11 @@ public class ProductServiceImpl implements IProductService {
             return ServerResponse.createByErrorMessage("商品已下架或者已删除");
         }
 
+        ProductVo productVo = new ProductVo();
+        productVo.setImageHost(fileAddress+"/");
+        BeanUtils.copyProperties(productWithBLOBs,productVo);
 
-        return ServerResponse.createBySuccess(productWithBLOBs);
+        return ServerResponse.createBySuccess(productVo);
     }
 
     @Override
@@ -186,7 +194,19 @@ public class ProductServiceImpl implements IProductService {
 
         PageHelper.startPage(pageNum, pageSize);
         List<Product> productList = productMapper.selectByExample(productExample);
-        PageInfo<Product> productPageInfo = new PageInfo<>(productList);
+
+        // 改造数据
+        ArrayList<ProductVo> productVos = new ArrayList<>();
+
+        for (Product product : productList) {
+            ProductVo productVo = new ProductVo();
+            productVo.setImageHost(fileAddress+"/");
+            BeanUtils.copyProperties(product,productVo);
+            productVos.add(productVo);
+        }
+
+
+        PageInfo<ProductVo> productPageInfo = new PageInfo<>(productVos);
 
         return ServerResponse.createBySuccess(productPageInfo);
     }

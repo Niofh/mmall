@@ -2,7 +2,6 @@ package com.mmall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
-import com.mmall.pojo.ProductWithBLOBs;
 import com.mmall.vo.ProductVo;
 
 /**
@@ -59,7 +58,7 @@ public interface IProductService {
      * @param productId
      * @return
      */
-    ServerResponse<ProductWithBLOBs> getPortalProductById(Integer productId);
+    ServerResponse<ProductVo> getPortalProductById(Integer productId);
 
 
     /**
