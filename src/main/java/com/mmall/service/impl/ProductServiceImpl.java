@@ -155,4 +155,39 @@ public class ProductServiceImpl implements IProductService {
 
         return ServerResponse.createBySuccess(productWithBLOBs);
     }
+
+    @Override
+    public ServerResponse<PageInfo> getPortalProductListByCategoryId(String keyword, Integer categoryId, int pageNum, int pageSize, String orderBy) {
+
+//        if(StringUtils.isBlank(keyword) || categoryId==null ){
+//            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+//        }
+
+        ProductExample productExample = new ProductExample();
+        ProductExample.Criteria criteria = productExample.createCriteria();
+
+        // 分类查询
+        if (categoryId != null) {
+            criteria.andCategoryIdEqualTo(categoryId);
+        }
+
+        // 商品名字模糊查询
+        if (StringUtils.isNotBlank(keyword)) {
+            String likeStr = new StringBuilder().append("%").append(keyword).append("%").toString();
+            criteria.andNameLike(likeStr);
+        }
+
+
+        // 条件模糊查询
+        if (Const.ProductListOrderBy.set.contains(orderBy)) {
+            String nowOrderBy = orderBy.replace("_", " ");
+            productExample.setOrderByClause(nowOrderBy);
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productMapper.selectByExample(productExample);
+        PageInfo<Product> productPageInfo = new PageInfo<>(productList);
+
+        return ServerResponse.createBySuccess(productPageInfo);
+    }
 }

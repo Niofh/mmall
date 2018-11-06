@@ -2,10 +2,8 @@ package com.mmall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
-import com.mmall.pojo.Product;
 import com.mmall.pojo.ProductWithBLOBs;
 import com.mmall.vo.ProductVo;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 商品接口
@@ -62,6 +60,18 @@ public interface IProductService {
      * @return
      */
     ServerResponse<ProductWithBLOBs> getPortalProductById(Integer productId);
+
+
+    /**
+     * 根据分类id查询商品列表
+     * @param keyword 搜索关键字
+     * @param categoryId 分类id
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy 排序方式
+     * @return
+     */
+    ServerResponse<PageInfo> getPortalProductListByCategoryId(String keyword,Integer categoryId,int pageNum,int pageSize,String orderBy);
 
 
 

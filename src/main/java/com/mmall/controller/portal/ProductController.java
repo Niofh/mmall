@@ -27,6 +27,16 @@ public class ProductController {
         return iProductService.getPortalProductById(productId);
     }
 
+    /**
+     * 前台商列表
+     *
+     * @param keyword    关键字
+     * @param categoryId 商品分类
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy    排序方式
+     * @return
+     */
     @RequestMapping("/list")
     @ResponseBody
     public ServerResponse getProductList(@RequestParam(value = "keyword", required = false) String keyword,
@@ -34,7 +44,7 @@ public class ProductController {
                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                          @RequestParam(value = "orderBy", defaultValue = "") String orderBy) {
-        return null;
+        return iProductService.getPortalProductListByCategoryId(keyword, categoryId, pageNum, pageSize, orderBy);
     }
 
 

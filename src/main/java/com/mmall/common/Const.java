@@ -1,5 +1,9 @@
 package com.mmall.common;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 全局自定义变量
  *
@@ -16,6 +20,11 @@ public class Const {
     public interface Roles {
         int ROLE_CUSTOMER = 0; // 普通用户
         int ROLE_ADMIN = 1; // 管理员
+    }
+
+    public interface ProductListOrderBy {
+        Set<String> set =new HashSet<>(Arrays.asList(new String[]{"price_asc", "price_desc"}));
+
     }
 
     // 商品状态
