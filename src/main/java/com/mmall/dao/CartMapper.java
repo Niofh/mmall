@@ -7,6 +7,21 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface CartMapper {
+
+    /**
+     * 获取用户购物车总数量
+     * @param userId
+     * @return
+     */
+    int getUserCartTotal(@Param("userId") Integer userId);
+
+    /**
+     * 通过userid查询购物车列表
+     * @param userId
+     * @return
+     */
+    List<Cart> selectCartsByUserId (@Param("userId") Integer userId);
+
     /**
      * countByExample
      */

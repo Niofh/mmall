@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class Cart {
     /**
-     * 
+     * 购物车列表id
      */
     private Integer id;
 
     /**
-     * 
+     * 用户id
      */
     private Integer userId;
 
