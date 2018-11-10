@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -80,6 +81,69 @@ public class CartServiceImpl implements ICartService {
     }
 
 
+    @Override
+    public ServerResponse<CartVo> updateCart(Integer userId, Integer productId, Integer count) {
+
+        if (productId == null || count == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        CartExample cartExample = new CartExample();
+        CartExample.Criteria criteria = cartExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andProductIdEqualTo(productId);
+        List<Cart> cartList = cartMapper.selectByExample(cartExample);
+
+        if (CollectionUtils.isEmpty(cartList)) {
+            return ServerResponse.createByErrorMessage("该用户没有这个商品");
+        }
+
+
+        // 更新产品数量
+        Cart cart = cartList.get(0);
+        cart.setQuantity(count);
+        int i = cartMapper.updateByPrimaryKeySelective(cart);
+        if (i == 0) {
+            return ServerResponse.createByErrorMessage("更新产品失败");
+        }
+
+        return this.getCartList(userId);
+    }
+
+
+    @Override
+    public ServerResponse<CartVo> delCart(Integer userId, String productIds) {
+        List<String> productIdList = Arrays.asList(productIds.split(","));
+        if (CollectionUtils.isEmpty(productIdList)) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        // sql 删除多个
+        int i = cartMapper.delCartByuserIdandProIds(userId, productIdList);
+
+        if (i == 0) {
+            return ServerResponse.createByErrorMessage("删除失败");
+        }
+
+        return this.getCartList(userId);
+    }
+
+
+
+
+    @Override
+    public ServerResponse<CartVo> selectCheckorunCheck(Integer userId,Integer productId,Integer checked){
+        // 如果productId 是null, 代表这个用户购物车商品全部全选或者反选
+        int i = cartMapper.updateCheckorUncheck(userId, productId, checked);
+
+        if(i==0){
+            return ServerResponse.createByErrorMessage("更新失败");
+        }
+
+        return this.getCartList(userId);
+    }
+
+
+    // 这个公用方法用来判断库存是否够，还有计算总价格等
     private CartVo getList(Integer userId) {
 
         // 动态修改购物车数量 和 总价格 不会影响商品库存
@@ -88,7 +152,6 @@ public class CartServiceImpl implements ICartService {
         List<Cart> carts = cartMapper.selectCartsByUserId(userId); // 购物车列表
         BigDecimal totalDecimal = new BigDecimal("0"); // 购物车总价格
 
-        Boolean isChecked = false; // 默认没有全部勾选
         if (CollectionUtils.isNotEmpty(carts)) {
 
             for (Cart cart : carts) {
@@ -136,6 +199,7 @@ public class CartServiceImpl implements ICartService {
                         Cart cartForQuantity = new Cart();
                         cartForQuantity.setId(cart.getId());
                         cartForQuantity.setQuantity(buyLimitCount);
+
                         cartMapper.updateByPrimaryKeySelective(cartForQuantity);
 
                     }
@@ -147,15 +211,19 @@ public class CartServiceImpl implements ICartService {
                 }
                 cartProductVos.add(cartProductVo);
 
-                // 总价格 单个商品总价格（价格*数量）相加
-                cartProductVo.setProductTotalPrice(BigDecimalUtil.add(totalDecimal.doubleValue(), cartProductVo.getProductPrice().doubleValue()));
+                // 如果商品是勾选的，就计算总价
+                if (cart.getChecked() == Const.Cart.CHECKED) {
+                    //  总价格 单个商品总价格（价格*数量）相加
+                    totalDecimal = BigDecimalUtil.add(totalDecimal.doubleValue(), cartProductVo.getProductTotalPrice().doubleValue());
+
+                }
             }
 
 
         }
 
         CartVo cartVo = new CartVo();
-        cartVo.setImageHost(imgHost);
+        cartVo.setImageHost(imgHost+"/");
         cartVo.setCartProductVoList(cartProductVos);
         cartVo.setCartTotalPrice(totalDecimal);
         cartVo.setAllChecked(this.getAllCheckedStatus(userId));

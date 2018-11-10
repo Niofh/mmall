@@ -320,4 +320,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteShippingByUserId" parameterType="map">
+    delete from mmall_shipping where user_id =# {userId} and  id = #{shippingId}
+  </delete>
 </mapper>

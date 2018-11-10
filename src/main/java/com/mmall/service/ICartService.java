@@ -29,4 +29,30 @@ public interface ICartService {
      * @return
      */
     ServerResponse<CartVo> addCart(Integer userId, Integer productId, Integer count);
+
+    /**
+     * 更新购物车产品
+     * @param userId
+     * @param productId
+     * @param count
+     * @return
+     */
+    ServerResponse<CartVo> updateCart(Integer userId, Integer productId, Integer count);
+
+    /**
+     * 删除多个产品
+     * @param userId
+     * @param productIds 产品编号 1,2,3
+     * @return
+     */
+    ServerResponse<CartVo> delCart(Integer userId,String productIds);
+
+    /**
+     * 全选和反选
+     * @param userId
+     * @param productId
+     * @param checked 0是不选 1是勾选
+     * @return
+     */
+    ServerResponse<CartVo> selectCheckorunCheck(Integer userId,Integer productId,Integer checked);
 }

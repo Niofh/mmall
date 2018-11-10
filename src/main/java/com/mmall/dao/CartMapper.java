@@ -22,6 +22,14 @@ public interface CartMapper {
      */
     List<Cart> selectCartsByUserId (@Param("userId") Integer userId);
 
+
+    int delCartByuserIdandProIds(@Param("userId") Integer userId, @Param("productIdList")List<String> productIdList);
+
+
+    // 更新是否勾选
+    int updateCheckorUncheck(@Param("userId")Integer userId, @Param("productId")Integer productId, @Param("checked")Integer checked);
+
+
     /**
      * countByExample
      */
@@ -76,4 +84,5 @@ public interface CartMapper {
      * updateByPrimaryKey
      */
     int updateByPrimaryKey(Cart record);
+
 }
