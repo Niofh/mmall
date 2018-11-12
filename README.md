@@ -27,3 +27,12 @@
     * [mysql5.7详细教程](https://www.cnblogs.com/renjianjun/p/9016286.html)
     
     
+### 本章节学到软件
+1. 谷歌插件 画图工具  gliffy  https://blog.csdn.net/u010402584/article/details/81207430
+2. 谷歌插件 简单版的http请求工具 Restlet Client
+3. idea mybatis free  mybatis快速指向工具
+4. idea gosnformat josn格式化
+5. 支付宝 rsa加密工具
+6. 手机连接到客户端 vysor pro
+7. 支付宝沙箱环境下载
+    
