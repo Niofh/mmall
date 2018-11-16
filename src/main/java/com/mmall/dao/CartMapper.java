@@ -85,4 +85,10 @@ public interface CartMapper {
      */
     int updateByPrimaryKey(Cart record);
 
+    /**
+     * 获取购物车已经勾选的商品
+     * @param userId
+     * @return
+     */
+    List<Cart> selectCheckCartProduct(Integer userId);
 }

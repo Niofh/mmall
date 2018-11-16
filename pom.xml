@@ -267,7 +267,11 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <compilerArguments>
+                        <!--<extdirs>${project.basedir}/src/main/webapp/WEB-INFO/lib</extdirs>-->
+                    </compilerArguments>
                 </configuration>
+
             </plugin>
         </plugins>
     </build>

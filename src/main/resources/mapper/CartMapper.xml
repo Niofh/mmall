@@ -271,12 +271,19 @@
         set checked = #{checked}
         <where>
             <if test="userId!=null">
-              user_id = #{userId}
+                user_id = #{userId}
             </if>
             <if test="productId!=null">
                 and product_id = #{productId}
             </if>
         </where>
     </update>
+
+    <select id="selectCheckCartProduct" parameterType="int" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mmall_cart
+        where user_id = #{userId} and checked = 1
+    </select>
 
 </mapper>
