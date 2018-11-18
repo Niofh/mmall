@@ -15,7 +15,6 @@ public class OrderItemVo {
     private Date updateTime;
 
 
-
     public Long getOrderNo() {
         return orderNo;
     }
@@ -48,11 +47,11 @@ public class OrderItemVo {
         this.productImage = productImage;
     }
 
-    public BigDecimal getCurrentUntprice() {
+    public BigDecimal getCurrentUnitPrice() {
         return currentUnitPrice;
     }
 
-    public void setCurrentUntprice(BigDecimal currentUnitPrice) {
+    public void setCurrentUnitPrice(BigDecimal currentUnitPrice) {
         this.currentUnitPrice = currentUnitPrice;
     }
 
@@ -64,11 +63,11 @@ public class OrderItemVo {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotoalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotoalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -87,7 +86,6 @@ public class OrderItemVo {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
 
     @Override
     public String toString() {

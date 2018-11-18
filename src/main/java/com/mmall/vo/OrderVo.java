@@ -14,7 +14,7 @@ public class OrderVo {
     private int paymentType; // 支付方式
 
     private String paymentTypeDesc; // 支付描述
-    private Integer postage;
+    private Integer postage; // 邮费
 
     private Integer status; // 订单状态 如1：已发货
 
@@ -40,7 +40,7 @@ public class OrderVo {
     //订单的明细
     private List<OrderItemVo> orderItemVoList;
 
-    private Date imageHost;
+    private String imageHost;
     private Integer shippingId; // 收货地址id
     private String receiverName; // 收货地址的名称
     private Shipping shipping; // 收货地址详情
@@ -149,11 +149,11 @@ public class OrderVo {
         this.orderItemVoList = orderItemVoList;
     }
 
-    public Date getImageHost() {
+    public String getImageHost() {
         return imageHost;
     }
 
-    public void setImageHost(Date imageHost) {
+    public void setImageHost(String imageHost) {
         this.imageHost = imageHost;
     }
 

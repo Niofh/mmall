@@ -1,5 +1,6 @@
 package com.mmall.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.vo.OrderProductVo;
 import com.mmall.vo.OrderVo;
@@ -12,9 +13,56 @@ public interface IOrderService {
     /**
      * 创建订单
      * @param userId  用户id
-     * @param shipping 收货地址id
+     * @param shippingId 收货地址id
      * @return
      */
-    ServerResponse<OrderVo> createOrder(Integer userId, Integer shipping);
+    ServerResponse<OrderVo> createOrder(Integer userId, Integer shippingId);
 
+    /**
+     * 获取订单列表
+     * @param userId
+     * @return
+     */
+    ServerResponse<PageInfo> getOrderList(Integer userId, Integer pageNum, Integer pageSize);
+
+    ServerResponse<OrderVo> getOrderDetail(Integer userId,Long orderNo);
+
+    /**
+     * 取消订单
+     * @param userId
+     * @param orderNo
+     * @return
+     */
+    ServerResponse cancelOrder(Integer userId, Long orderNo);
+
+
+
+    /**
+     * 管理员获取所有订单数据
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    ServerResponse<PageInfo> getOrderListNoUserIdManager(Integer pageNum, Integer pageSize);
+
+
+    /**
+     * 管理员按订单号查询订单
+     * @param orderNo
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+
+    ServerResponse<PageInfo> searchOrderManager(Long orderNo,Integer pageNum, Integer pageSize);
+
+    ServerResponse<OrderVo> getOrderDetailManager(Long orderNo);
+
+
+    /**
+     * 订单发货功能
+     * @param orderNo
+     * @return
+     */
+    ServerResponse orderSendManager(Long orderNo);
 }

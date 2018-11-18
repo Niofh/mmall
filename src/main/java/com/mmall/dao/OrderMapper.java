@@ -2,8 +2,9 @@ package com.mmall.dao;
 
 import com.mmall.pojo.Order;
 import com.mmall.pojo.OrderExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderMapper {
     /**
@@ -60,4 +61,9 @@ public interface OrderMapper {
      *  updateByPrimaryKey
      */
     int updateByPrimaryKey(Order record);
+
+    // 根据订单编号和用户获取订单
+    Order selectByOrderNoAndUserId(@Param("orderNo") Long orderNo,@Param("userId") Integer userId);
+
+    Order selectByOrderNo(Long orderNo);
 }

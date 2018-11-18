@@ -48,7 +48,7 @@ var config = {
     output: {
         path       : __dirname + '/dist',
         // publicPath : 'dev' === WEBPACK_ENV ? '/dist/' : '/protal/',
-         publicPath : '/dist/',
+         publicPath : '/protal/',
         filename   : 'js/[name].js'
     },
     externals : {
@@ -103,7 +103,9 @@ var config = {
         new HtmlWebpackPlugin(getHtmlConfig('result', '操作结果')),
         new HtmlWebpackPlugin(getHtmlConfig('order-confirm', '订单确认页')),
         new HtmlWebpackPlugin(getHtmlConfig('order-list', '订单列表')),
+        new HtmlWebpackPlugin(getHtmlConfig('order-detail', '订单详情页')),
         new HtmlWebpackPlugin(getHtmlConfig('about', '关于')),
+        new HtmlWebpackPlugin(getHtmlConfig('payment', '订单支付页')),
     ]
 };
 

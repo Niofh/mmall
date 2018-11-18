@@ -91,4 +91,7 @@ public interface CartMapper {
      * @return
      */
     List<Cart> selectCheckCartProduct(Integer userId);
+
+    // 清空用户购物车已勾选商品
+    int deleteByUserIdAndChecked(Integer userId);
 }
