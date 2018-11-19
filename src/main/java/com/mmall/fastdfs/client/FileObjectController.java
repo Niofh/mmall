@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -181,6 +182,7 @@ public class FileObjectController {
     public FileResponseData uploadSample(MultipartFile file, HttpServletRequest request){
         FileResponseData responseData = new FileResponseData();
         try {
+            File file1 = new File("C:\\Users\\Administrator\\Desktop\\mmall\\src\\main\\resources\\zfbinfo.properties");
             // 上传到服务器
             String filepath = fastDFSClient.uploadFileWithMultipart(file);
 
