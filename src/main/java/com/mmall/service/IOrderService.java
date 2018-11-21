@@ -36,6 +36,16 @@ public interface IOrderService {
     ServerResponse cancelOrder(Integer userId, Long orderNo);
 
 
+    /**
+     * 订单支付
+     * @param userId
+     * @param orderNo 订单编号
+     * @param path  上传文件的前缀
+     * @return
+     */
+    ServerResponse pay(Integer userId,Long orderNo,String path);
+
+
 
     /**
      * 管理员获取所有订单数据
