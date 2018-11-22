@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/order")
@@ -89,6 +92,34 @@ public class OrderController {
         }
         String path =request.getSession().getServletContext().getRealPath("upload");
         return iOrderService.pay(user.getId(),orderNo,path);
+    }
+
+    /*
+    * 支付宝回调地址
+    * 接受支付宝所有异步回调的参数,用对象存起来
+    * 异步通知验签 ：https://docs.open.alipay.com/200/106120#s1 自行实现验签
+    * 验证异步回调的方法
+    * */
+    @RequestMapping("/alipay_callback")
+    @ResponseBody
+    public ServerResponse alipayCallback(HttpServletRequest request) {
+        Map<String, String[]> requestParams = request.getParameterMap();
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        // 所有key循坏
+        for(Iterator iter = requestParams.keySet().iterator(); iter.hasNext();){
+            String name = (String)iter.next();
+            String[] values = (String[]) requestParams.get(name); // 获取所有值
+            String valueStr = "";
+            for(int i = 0 ; i <values.length;i++){
+                valueStr = (i == values.length -1)?valueStr + values[i]:valueStr + values[i]+",";
+            }
+            params.put(name,valueStr);
+        }
+
+        System.out.println(params);
+        return null;
     }
 
 
