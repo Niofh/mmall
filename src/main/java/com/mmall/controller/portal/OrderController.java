@@ -83,6 +83,13 @@ public class OrderController {
         return iOrderService.cancelOrder(user.getId(),orderNo);
     }
 
+    /**
+     * 支付宝当面付SDK&Demo https://docs.open.alipay.com/194/105201/
+     * @param httpSession
+     * @param orderNo
+     * @param request
+     * @return
+     */
     @RequestMapping("/pay")
     @ResponseBody
     public ServerResponse pay(HttpSession httpSession, Long orderNo, HttpServletRequest request) {
