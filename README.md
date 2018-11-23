@@ -5,9 +5,7 @@
 
 2. 去掉xml底色问题 https://blog.csdn.net/qq_31156277/article/details/77802767 
 
-3. 拦截器 interceptor 是针对Controller 层
 
-4. Aop 是针对Service层
 
 
 ### 慕课网mmall从零开发 V1.0
@@ -34,5 +32,12 @@
 4. idea gosnformat josn格式化
 5. 支付宝 rsa加密工具
 6. 手机连接到客户端 vysor pro
-7. 支付宝沙箱环境下载
-    
+7. 支付宝沙箱环境下载 
+
+
+### 支付宝当面付对接 案例是二维码支付
+1. 当面付文档 https://docs.open.alipay.com/194/103296/
+2. 异步回调的文档 https://docs.open.alipay.com/194/103296/ 仅支持扫二维码
+3. 支付完异步回调的地址处理，需要验签 https://docs.open.alipay.com/200/106120#s1 
+4. 沙箱环境配置测试，需要配置公钥.私钥、支付宝私钥、回调地址 https://openhome.alipay.com/platform/appDaily.htm?tab=info
+5. 用natapp内网穿透来测试沙箱环境 https://natapp.cn/#download

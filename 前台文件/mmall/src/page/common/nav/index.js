@@ -39,10 +39,13 @@ var nav = {
     // 加载用户信息
     loadUserInfo : function(){
         _user.checkLogin(function(res){
-            $('.user.not-login').hide().siblings('.user.login').show()
-                .find('.username').text(res.username);
+            if(res){
+                $('.user.not-login').hide().siblings('.user.login').show()
+                    .find('.username').text(res.username);
+            }
         }, function(errMsg){
             // do nothing
+
         });
     },
     // 加载购物车数量

@@ -5,6 +5,8 @@ import com.mmall.common.ServerResponse;
 import com.mmall.vo.OrderProductVo;
 import com.mmall.vo.OrderVo;
 
+import java.util.Map;
+
 public interface IOrderService {
 
     /*获取购物车勾选的商品信息 （结算）*/
@@ -46,6 +48,24 @@ public interface IOrderService {
     ServerResponse pay(Integer userId,Long orderNo,String path);
 
 
+    /**
+     * 验证异步支付宝数据并且更新
+     * @param params
+     * @return
+     */
+    ServerResponse aliCallback(Map<String, String> params);
+
+
+    /**
+     * 前台监听订单的状态
+     * @param id
+     * @param orderNo
+     * @return
+     */
+    ServerResponse<Boolean> queryOrderPayStatus(Integer id, Long orderNo);
+
+
+
 
     /**
      * 管理员获取所有订单数据
@@ -75,4 +95,6 @@ public interface IOrderService {
      * @return
      */
     ServerResponse orderSendManager(Long orderNo);
+
+
 }

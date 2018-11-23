@@ -1,5 +1,8 @@
 package com.mmall.controller.portal;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.demo.trade.config.Configs;
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.Const;
 import com.mmall.common.ResponseCode;
@@ -105,12 +108,17 @@ public class OrderController {
     * 支付宝回调地址
     * 接受支付宝所有异步回调的参数,用对象存起来
     * 异步通知验签 ：https://docs.open.alipay.com/200/106120#s1 自行实现验签
+    * https://docs.open.alipay.com/194/103296/
     * 验证异步回调的方法
     * */
     @RequestMapping("/alipay_callback")
     @ResponseBody
-    public ServerResponse alipayCallback(HttpServletRequest request) {
+    public Object alipayCallback(HttpServletRequest request) {
         Map<String, String[]> requestParams = request.getParameterMap();
+
+        if(requestParams.size()==0){
+            return ServerResponse.createByError();
+        }
 
         Map<String, String> params = new HashMap<String, String>();
 
@@ -125,8 +133,42 @@ public class OrderController {
             params.put(name,valueStr);
         }
 
-        System.out.println(params);
-        return null;
+        params.remove("sign_type");
+
+        try {
+            boolean rsaCheckV2 = AlipaySignature.rsaCheckV2(params, Configs.getAlipayPublicKey(), "utf-8", Configs.getSignType());
+            if(!rsaCheckV2){
+                return ServerResponse.createByErrorMessage("非法请求,验证不通过,再恶意请求我就报警找网警了");
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+
+        //  验证各种数据 https://docs.open.alipay.com/194/103296/ 第五步
+
+        ServerResponse serverResponse = iOrderService.aliCallback(params);
+
+        if(serverResponse.isSuccess()){
+            return Const.AlipayCallback.RESPONSE_SUCCESS; // 支付成功需要返回success，不然无限轮播请求状态
+        }
+        return Const.AlipayCallback.RESPONSE_FAILED;
+
+    }
+
+    /**
+     * 监听订单状态  前端5面监听一次，监听成功返回成功野
+     * @param httpSession
+     * @param orderNo
+     * @return
+     */
+    @RequestMapping("/query_order_pay_status")
+    @ResponseBody
+    public ServerResponse<Boolean> queryOrderPayStatus(HttpSession httpSession, Long orderNo){
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iOrderService.queryOrderPayStatus(user.getId(),orderNo);
     }
 
 

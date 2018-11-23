@@ -34,6 +34,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service("iOrderService")
@@ -59,6 +61,9 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private ShippingMapper shippingMapper;
+
+    @Autowired
+    private PayInfoMapper payInfoMapper;
 
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
@@ -320,6 +325,80 @@ public class OrderServiceImpl implements IOrderService {
 
     }
 
+
+    @Override
+    public ServerResponse aliCallback(Map<String, String> params) {
+
+        Long out_trade_no = Long.valueOf(params.get("out_trade_no")); // 订单编号
+        String total_amount = params.get("total_amount"); // 交易金额
+
+
+        String tradeNo = params.get("trade_no");  //支付宝交易凭证号
+        String tradeStatus = params.get("trade_status"); // 交易状态
+
+
+        Order order = orderMapper.selectByOrderNo(out_trade_no);
+        if(order==null){
+            return ServerResponse.createByErrorMessage("非快乐慕商城的订单,回调忽略");
+        }
+        BigDecimal payment = order.getPayment();
+
+        if(!(total_amount.equals(payment.toString()))){
+            return ServerResponse.createByErrorMessage("这次订单的交易总金额不一致");
+        }
+
+        if(order.getStatus()>=Const.OrderStatusEnum.PAID.getCode()){
+            return ServerResponse.createByErrorMessage("支付宝重复调用");
+        }
+
+        if(tradeStatus.equals(Const.AlipayCallback.TRADE_STATUS_TRADE_SUCCESS)){
+            // 支付成功
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date gmt_payment = null;
+            try {
+                gmt_payment = sdf.parse(params.get("gmt_payment"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Order order1 = new Order();
+
+            order1.setPaymentTime(gmt_payment); // 支付时间
+            order1.setStatus(Const.OrderStatusEnum.PAID.getCode());
+            order1.setId(order.getId());
+            // 更新订单状态
+
+            orderMapper.updateByPrimaryKeySelective(order1);
+
+        }
+
+
+        // 支付管理表
+        PayInfo payInfo = new PayInfo();
+        payInfo.setUserId(order.getUserId());
+        payInfo.setOrderNo(order.getOrderNo());
+        payInfo.setPayPlatform(Const.PaymentTypeEnum.ONLINE_PAY.getCode());
+        payInfo.setPlatformNumber(tradeNo);
+        payInfo.setPlatformStatus(tradeStatus);
+
+        payInfoMapper.insertSelective(payInfo);
+
+        return ServerResponse.createBySuccess();
+    }
+
+
+    @Override
+    public ServerResponse<Boolean> queryOrderPayStatus(Integer id, Long orderNo) {
+        Order order = orderMapper.selectByOrderNoAndUserId(orderNo, id);
+        if(order==null){
+            return ServerResponse.createByErrorMessage("用户没有该订单");
+        }
+        if(order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()){
+            return ServerResponse.createBySuccess(true);
+        }
+        return ServerResponse.createByError(false);
+    }
+
+
     // 简单打印应答
     private void dumpResponse(AlipayResponse response) {
         if (response != null) {
@@ -337,8 +416,10 @@ public class OrderServiceImpl implements IOrderService {
         PageHelper.startPage(pageNum, pageSize);
         OrderExample orderExample = new OrderExample();
         List<Order> orderList = orderMapper.selectByExample(orderExample);
+        PageInfo pageInfo = new PageInfo<>(orderList);
+
         List<OrderVo> orderVoList = this.assembleOrderVoList(orderList, null);
-        PageInfo<OrderVo> pageInfo = new PageInfo<>(orderVoList);
+        pageInfo.setList(orderVoList);
         return ServerResponse.createBySuccess(pageInfo);
     }
 
@@ -383,7 +464,7 @@ public class OrderServiceImpl implements IOrderService {
 
         int i = orderMapper.updateByPrimaryKeySelective(updateOrder);
         if (i > 0) {
-            ServerResponse.createBySuccess("发货成功");
+            return  ServerResponse.createBySuccess("发货成功");
         }
 
         return ServerResponse.createByError("发货失败");
