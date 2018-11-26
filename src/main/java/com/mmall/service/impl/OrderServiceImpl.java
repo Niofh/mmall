@@ -300,7 +300,7 @@ public class OrderServiceImpl implements IOrderService {
                 FastDFSClient fastDFSClient = new FastDFSClient();
                 String qrPath = null;
                 try {
-                     qrPath = fastDFSClient.uploadFileWithFilepath(filePath); // 二维码地址
+                     qrPath = fastDFSClient.uploadFileWithFilepath(filePath,null); // 二维码地址
                 } catch (FastDFSException e) {
                     e.printStackTrace();
                     return ServerResponse.createByError("上传二维码图片失败");

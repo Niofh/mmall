@@ -10,6 +10,8 @@
 
 ### 慕课网mmall从零开发 V1.0
 
+资料 http://learning.happymmall.com/
+
 1. 创建并且切换分支来开发
 
     git checkout -b v1.0 origin/master
@@ -41,3 +43,11 @@
 3. 支付完异步回调的地址处理，需要验签 https://docs.open.alipay.com/200/106120#s1 
 4. 沙箱环境配置测试，需要配置公钥.私钥、支付宝私钥、回调地址 https://openhome.alipay.com/platform/appDaily.htm?tab=info
 5. 用natapp内网穿透来测试沙箱环境 https://natapp.cn/#download
+
+
+
+### 上线问题
+1. 阿里云ESC服务器，域名等配置
+2. linux安装环境 nginx 映射 mysql maven git jdk 
+3. nginx反向代理，java配置文件改变，自动发布脚本
+自动发布脚本: 通过deploy.sh脚本 git仓库更新代码，mvn编译 tomcat重启发布
