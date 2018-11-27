@@ -50,4 +50,3 @@ cd /usr/local/java/apache-tomcat-8.5.34/logs
 
 echo "====================查看tomcat日志====================="
 tail -f catalina.out
-
