@@ -43,10 +43,10 @@ done
 
 
 echo "====================启动tomcat====================="
-/usr/local/java/apache-tomcat-8.5.34/startup.sh
+/usr/local/java/apache-tomcat-8.5.34/bin/startup.sh
 
 
-cd /usr/local/apache-tomcat-8.5.34/logs
+cd /usr/local/java/apache-tomcat-8.5.34/logs
 
 echo "====================查看tomcat日志====================="
 tail -f catalina.out
