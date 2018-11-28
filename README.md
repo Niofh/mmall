@@ -60,3 +60,5 @@
 6. 自动化脚本：给shell脚本单独加入可执行的权限 chmod u+x xxx.sh,之后把文件提交git仓库
 
    * rwx r->读 w->写 x->执行shell脚本  详情：https://www.cnblogs.com/123-/p/4189072.html
+   
+7. /usr/local/nginx/sbin  ./nginx -s reload 重启nginx
