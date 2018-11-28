@@ -11,7 +11,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // 环境变量配置，dev / online
 var WEBPACK_ENV = process.env.WEBPACK_ENV || 'dev';
 
-// 获取html-webpack-plugin参数的方法 
+
+// 获取html-webpack-plugin参数的方法
 var getHtmlConfig = function (name, title) {
     return {
         template: './src/view/' + name + '.html',
@@ -108,8 +109,8 @@ var config = {
         new HtmlWebpackPlugin(getHtmlConfig('payment', '订单支付页')),
     ]
 };
-
 if ('dev' === WEBPACK_ENV) {
+
     config.entry.common.push('webpack-dev-server/client?http://localhost:8088/');
 }
 
