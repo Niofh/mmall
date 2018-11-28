@@ -53,10 +53,10 @@
 4. nginx 反向代理如果只是host、端口转换一般session不会丢失，所以后端不用开跨域，
     nginx 开启反向代理接口，把跨域开起来
   ` location / { proxy_pass http://127.0.0.1:8080/; add_header Access-Control-Allow-Origin '*'; }`
-    详细访问地址：https://www.cnblogs.com/zangdalei/p/6021352.html
+    详细访问地址：https://www.cnblogs.com/zang dalei/p/6021352.html
 
 5. nginx访问静态页面，tomcat来启动服务
 
-6. 自动化脚本：给shell脚本单独加入可执行的权限 chown u+x xxx.sh,之后把文件提交git仓库
+6. 自动化脚本：给shell脚本单独加入可执行的权限 chmod u+x xxx.sh,之后把文件提交git仓库
 
    * rwx r->读 w->写 x->执行shell脚本  详情：https://www.cnblogs.com/123-/p/4189072.html
