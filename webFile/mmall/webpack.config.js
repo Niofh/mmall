@@ -48,7 +48,7 @@ var config = {
     output: {
         path: __dirname + '/dist',
         // publicPath: 'dev' === WEBPACK_ENV ? '/dist/' : '/protal/',
-         publicPath : '/',
+        publicPath: '/',
         filename: 'js/[name].js'
     },
     externals: {

@@ -8,7 +8,7 @@
 'use strict';
 var hogan = require('hogan.js');
 var conf = {
-    serverHost: ''
+    serverHost: process.env.WEBPACK_ENV==="online"?'http://39.108.113.143:8080':'http://127.0.0.1:8080'
 };
 var _util = {
     //网络请求
