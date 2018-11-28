@@ -48,8 +48,8 @@ var config = {
     },
     output: {
         path: __dirname + '/dist',
-        // publicPath: 'dev' === WEBPACK_ENV ? '/dist/' : '/protal/',
-        publicPath: '/',
+        publicPath: 'dev' === WEBPACK_ENV ? '/dist/' : '//s.fuhua.site/mmall/',
+        // publicPath: '/',
         filename: 'js/[name].js'
     },
     externals: {
