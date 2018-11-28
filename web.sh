@@ -4,11 +4,11 @@ cd /usr/local/web/mmall/webFile/admin
 
 npm install
 
-npm run build
+npm run dist
 
 
 cd /usr/local/web/mmall/webFile/mmall
 
 npm install
 
-npm run build
+npm run dist
