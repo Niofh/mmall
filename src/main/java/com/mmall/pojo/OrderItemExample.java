@@ -1,10 +1,12 @@
 package com.mmall.pojo;
 
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@ToString
 public class OrderItemExample {
     /**
      * mmall_order_item

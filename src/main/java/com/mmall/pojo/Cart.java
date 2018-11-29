@@ -1,10 +1,13 @@
 package com.mmall.pojo;
 
+import lombok.ToString;
+
 import java.util.Date;
 
 /**
  *  TABLE null
  */
+@ToString
 public class Cart {
     /**
      * 购物车列表id

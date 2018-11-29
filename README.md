@@ -1,10 +1,11 @@
 
+[查看升级版mmall2.0](https://github.com/Niofh/mmall/blob/v2.0/README2.0.md)
+
 ### idea java配置
 
 1. mybatis 插件下载 free Mybatis plugin
 
 2. 去掉xml底色问题 https://blog.csdn.net/qq_31156277/article/details/77802767 
-
 
 
 
@@ -62,3 +63,5 @@
    * rwx r->读 w->写 x->执行shell脚本  详情：https://www.cnblogs.com/123-/p/4189072.html
    
 7. /usr/local/nginx/sbin  ./nginx -s reload 重启nginx
+
+

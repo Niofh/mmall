@@ -1,9 +1,11 @@
 package com.mmall.pojo;
 
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@ToString
 public class ShippingExample {
     /**
      * mmall_shipping

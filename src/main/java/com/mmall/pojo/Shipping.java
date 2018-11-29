@@ -1,10 +1,14 @@
 package com.mmall.pojo;
 
+import lombok.ToString;
+
 import java.util.Date;
 
 /**
  *  TABLE null
  */
+
+@ToString
 public class Shipping {
     /**
      * 

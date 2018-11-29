@@ -1,12 +1,15 @@
 package com.mmall.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.ToString;
 
 import java.util.Date;
 
 /**
  *  TABLE null
  */
+
+@ToString
 public class User {
     /**
      * 用户表id

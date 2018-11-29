@@ -1,8 +1,12 @@
 package com.mmall.pojo;
 
+import lombok.ToString;
+
 /**
  *  TABLE null
  */
+
+@ToString
 public class ProductWithBLOBs extends Product {
     /**
      * 图片地址,json格式,扩展用

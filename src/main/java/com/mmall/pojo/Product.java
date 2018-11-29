@@ -1,6 +1,7 @@
 package com.mmall.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
 /**
  *  TABLE null
  */
+@ToString
 public class Product {
     /**
      * 商品id

@@ -1,12 +1,14 @@
 package com.mmall.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.ToString;
 
 import java.util.Date;
 
 /**
  *  TABLE null
  */
+@ToString
 public class Category {
     /**
      * 类别Id

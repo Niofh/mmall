@@ -1,11 +1,14 @@
 package com.mmall.pojo;
 
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  *  TABLE null
  */
+@ToString
 public class OrderItem {
     /**
      * 订单子表id
