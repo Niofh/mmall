@@ -48,7 +48,7 @@ var config = {
     },
     output: {
         path: __dirname + '/dist',
-        publicPath: 'dev' === WEBPACK_ENV ? '/dist/' : '//s.fuhua.site/mmall/',
+        publicPath: 'dev' === WEBPACK_ENV ? '/dist/' : '//s.fuhua.site/mmall/dist/',
         // publicPath: '/',
         filename: 'js/[name].js'
     },

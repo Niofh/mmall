@@ -26,7 +26,7 @@ var config = {
     // path && publickPath
     output: {
         path: __dirname + '/dist/',
-        publicPath: WEBPACK_ENV === 'online' ? '//s.fuhua.site/admin/' : '/dist/',
+        publicPath: WEBPACK_ENV === 'online' ? '//s.fuhua.site/admin/dist/' : '/dist/',
         // publicPath  : '/backend/',
         filename: 'js/[name].js'
     },
