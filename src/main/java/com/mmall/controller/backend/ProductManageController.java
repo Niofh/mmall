@@ -86,6 +86,16 @@ public class ProductManageController {
         return iProductService.getProductById(productId);
     }
 
+    /*订单上架或者下架*/
+    @RequestMapping("/set_sale_status")
+    @ResponseBody
+    public ServerResponse set_sale_status(Integer productId,Integer status) {
+        return iProductService.updateProductStatus(productId,status);
+    }
+
+
+
+
 
 
     /**

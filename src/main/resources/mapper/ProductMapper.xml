@@ -375,4 +375,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateProductStatus" parameterType="map">
+    update mmall_product
+    set status = #{status}
+    where id = #{productId}
+  </update>
 </mapper>

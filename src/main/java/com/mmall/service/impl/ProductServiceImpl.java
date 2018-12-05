@@ -210,4 +210,9 @@ public class ProductServiceImpl implements IProductService {
 
         return ServerResponse.createBySuccess(productPageInfo);
     }
+
+    @Override
+    public ServerResponse updateProductStatus(Integer productId, Integer status) {
+        return productMapper.updateProductStatus(productId,status);
+    }
 }

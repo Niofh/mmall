@@ -1,10 +1,12 @@
 package com.mmall.dao;
 
+import com.mmall.common.ServerResponse;
 import com.mmall.pojo.Product;
 import com.mmall.pojo.ProductExample;
 import com.mmall.pojo.ProductWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ProductMapper {
     /**
@@ -76,4 +78,6 @@ public interface ProductMapper {
      *  updateByPrimaryKey
      */
     int updateByPrimaryKey(Product record);
+
+    ServerResponse updateProductStatus(@Param("productId") Integer productId, @Param("status")Integer status);
 }

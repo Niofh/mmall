@@ -72,8 +72,11 @@ public interface IProductService {
      */
     ServerResponse<PageInfo> getPortalProductListByCategoryId(String keyword,Integer categoryId,int pageNum,int pageSize,String orderBy);
 
-
-
-
-
+    /**
+     * '商品状态.1-在售 2-下架 3-删除',
+     * @param productId
+     * @param status
+     * @return
+     */
+    ServerResponse updateProductStatus(Integer productId, Integer status);
 }
