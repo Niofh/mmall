@@ -96,8 +96,6 @@ public class ProductManageController {
 
 
 
-
-
     /**
      * 只能上传图片
      *

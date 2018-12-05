@@ -1,6 +1,5 @@
 package com.mmall.dao;
 
-import com.mmall.common.ServerResponse;
 import com.mmall.pojo.Product;
 import com.mmall.pojo.ProductExample;
 import com.mmall.pojo.ProductWithBLOBs;
@@ -79,5 +78,5 @@ public interface ProductMapper {
      */
     int updateByPrimaryKey(Product record);
 
-    ServerResponse updateProductStatus(@Param("productId") Integer productId, @Param("status")Integer status);
+    int updateProductStatus(@Param("productId") Integer productId, @Param("status")Integer status);
 }

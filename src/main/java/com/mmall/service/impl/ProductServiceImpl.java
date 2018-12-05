@@ -158,8 +158,8 @@ public class ProductServiceImpl implements IProductService {
         }
 
         ProductVo productVo = new ProductVo();
-        productVo.setImageHost(fileAddress+"/");
-        BeanUtils.copyProperties(productWithBLOBs,productVo);
+        productVo.setImageHost(fileAddress + "/");
+        BeanUtils.copyProperties(productWithBLOBs, productVo);
 
         return ServerResponse.createBySuccess(productVo);
     }
@@ -200,8 +200,8 @@ public class ProductServiceImpl implements IProductService {
 
         for (Product product : productList) {
             ProductVo productVo = new ProductVo();
-            productVo.setImageHost(fileAddress+"/");
-            BeanUtils.copyProperties(product,productVo);
+            productVo.setImageHost(fileAddress + "/");
+            BeanUtils.copyProperties(product, productVo);
             productVos.add(productVo);
         }
 
@@ -213,6 +213,11 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ServerResponse updateProductStatus(Integer productId, Integer status) {
-        return productMapper.updateProductStatus(productId,status);
+        int i = productMapper.updateProductStatus(productId, status);
+        if (i > 0) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByErrorMessage("更新失败");
     }
+
 }
