@@ -3,8 +3,8 @@ echo "===========进入git项目happymmall目录============="
 cd /usr/local/mmall
 
 
-echo "==========git切换分之到v1.0==============="
-git checkout v1.0
+echo "==========git切换分之到v2.0==============="
+git checkout v2.0
 
 echo "==================git fetch======================"
 git fetch
@@ -14,7 +14,7 @@ git pull
 
 
 echo "===========编译并跳过单元测试===================="
-mvn clean package -Dmaven.test.skip=true
+mvn clean package -Dmaven.test.skip=true -Pprod
 
 
 echo "============删除旧的ROOT.war==================="
