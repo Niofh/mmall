@@ -64,4 +64,7 @@
    
 7. /usr/local/nginx/sbin  ./nginx -s reload 重启nginx
 
+8. 线上环境不要用root用户，因为可以操作很多数据库，最好建立一个用户单独只能操作这个表
+  添加用户和权限：https://www.cnblogs.com/xujishou/p/6306765.html
+
 
