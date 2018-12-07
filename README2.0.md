@@ -54,4 +54,11 @@
 4. 命令打包 
 
    * mvn clear package -Dmaven.test=true -P${deploy.type}; (deploy.dev是环境变量的dev或者prod)
+   
+   
+### redis
+
+1.linux是否开启外包连接redis https://blog.csdn.net/liuweixiao520/article/details/78216142
+
+
     

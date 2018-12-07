@@ -27,6 +27,14 @@ public class PropertiesUtil {
         }
     }
 
+    public static void setFileName(String fileName){
+        try {
+            props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getProperty(String key){
         String value = props.getProperty(key.trim());
         if(StringUtils.isBlank(value)){
@@ -45,5 +53,10 @@ public class PropertiesUtil {
     }
 
 
+    public static void main(String[] args) {
+        PropertiesUtil.setFileName("properties/jdbc.properties");
+        String property = PropertiesUtil.getProperty("jdbc.driver");
+        System.out.println("b:::"+ property);
+    }
 
 }
