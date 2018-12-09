@@ -62,6 +62,17 @@
     </servlet-mapping>
 
 
+    <!--重置用户信息在redis的过期时间-->
+    <filter>
+        <filter-name>SessionExpireFilter</filter-name>
+        <filter-class>com.mmall.interceptor.SessionExpireFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionExpireFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <!-- CORS过滤器 start -->
 <!--    <filter>
         <filter-name>cors</filter-name>

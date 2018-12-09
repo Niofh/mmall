@@ -8,6 +8,7 @@ import com.mmall.pojo.User;
 import com.mmall.pojo.UserExample;
 import com.mmall.service.IUserService;
 import com.mmall.utli.MD5Util;
+import com.mmall.utli.RedisPoolUtli;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -190,7 +191,8 @@ public class UserServiceImpl implements IUserService {
 
             String forgetToken = UUID.randomUUID().toString();
             // 把需要修改密码用户生成token来修改密码
-            TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
+            // TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
+            RedisPoolUtli.setEx(TokenCache.TOKEN_PREFIX + username,forgetToken,60*12);
 
             return ServerResponse.createBySuccess("验证成功", forgetToken);
         }
@@ -216,7 +218,7 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
 
-        String tokenCache = TokenCache.getKey(TokenCache.TOKEN_PREFIX + username);
+        String tokenCache = RedisPoolUtli.get(TokenCache.TOKEN_PREFIX + username);
 
         if (StringUtils.isBlank(tokenCache)) {
             return ServerResponse.createByErrorMessage("token已经过期，请重新获取");

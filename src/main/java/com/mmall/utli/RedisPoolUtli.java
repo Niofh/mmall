@@ -5,6 +5,10 @@ import com.mmall.common.RedisPool;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 
+/**
+ * 这个版本适合redis2.8,不是适合3.0以上版本
+ * 如果要适合redis3.0以上，查看单机和集群：https://blog.csdn.net/weixin_39509262/article/details/78095774
+ */
 @Slf4j
 public class RedisPoolUtli {
 

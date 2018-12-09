@@ -16,6 +16,12 @@ public class Const {
     public final static String USER_NAME = "username"; // 用户名属性
     public final static String EMAIL = "email"; // 邮件名属性
 
+
+    // redis过期时间
+    public interface RedisCacheExtime {
+        int REDIS_SESSION_EXTIME = 60 * 30; // 30分钟
+    }
+
     public interface Cart {
         int CHECKED = 1;//即购物车选中状态
         int UN_CHECKED = 0;//购物车中未选中状态
@@ -123,7 +129,7 @@ public class Const {
     }
 
     // 支付宝回调的状态
-    public interface  AlipayCallback{
+    public interface AlipayCallback {
         String TRADE_STATUS_WAIT_BUYER_PAY = "WAIT_BUYER_PAY"; // 交易创建，等待买家付款
         String TRADE_STATUS_TRADE_SUCCESS = "TRADE_SUCCESS"; // 交易支付成功
 
@@ -132,13 +138,14 @@ public class Const {
     }
 
     // 支付类型
-    public enum PayPlatformEnum{
-        ALIPAY(1,"支付宝");
+    public enum PayPlatformEnum {
+        ALIPAY(1, "支付宝");
 
-        PayPlatformEnum(int code,String value){
+        PayPlatformEnum(int code, String value) {
             this.code = code;
             this.value = value;
         }
+
         private String value;
         private int code;
 
