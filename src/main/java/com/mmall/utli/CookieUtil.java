@@ -21,13 +21,16 @@ public class CookieUtil {
      */
     public static String readLoginToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            log.info("read cookieName:{},cookieValue:{}", cookie.getName(), cookie.getValue());
-            if (StringUtils.equals(cookie.getName(), COOKIE_NAME)) {
+        if(cookies!=null){
+            for (Cookie cookie : cookies) {
                 log.info("read cookieName:{},cookieValue:{}", cookie.getName(), cookie.getValue());
-                return cookie.getValue();
+                if (StringUtils.equals(cookie.getName(), COOKIE_NAME)) {
+                    log.info("read cookieName:{},cookieValue:{}", cookie.getName(), cookie.getValue());
+                    return cookie.getValue();
+                }
             }
         }
+
         return null;
     }
 

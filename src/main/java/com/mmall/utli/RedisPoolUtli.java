@@ -125,9 +125,7 @@ public class RedisPoolUtli {
     public static void main(String[] args) {
 
         RedisPoolUtli.set("testKey", "test");
-        RedisPoolUtli.setEx("ex", "aaa", 1000*20);
-        RedisPoolUtli.expire("testKey",1000*10);
-        RedisPoolUtli.del("testKey");
-        RedisPoolUtli.del("ex");
+        log.info(RedisPoolUtli.get("testKey"));
+
     }
 }
