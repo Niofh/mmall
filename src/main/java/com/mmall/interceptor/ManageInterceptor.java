@@ -7,7 +7,7 @@ import com.mmall.pojo.User;
 import com.mmall.utli.CookieUtil;
 import com.mmall.utli.InterceptorRespoenUtli;
 import com.mmall.utli.JsonUtil;
-import com.mmall.common.jedis.RedisPoolUtil;
+import com.mmall.common.jedis.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +35,7 @@ public class ManageInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String data = RedisPoolUtil.get(loginToken);
+        String data = RedisShardedPoolUtil.get(loginToken);
 
         User user = JsonUtil.string2Obj(data, User.class);
         // 用户登录信息过期
