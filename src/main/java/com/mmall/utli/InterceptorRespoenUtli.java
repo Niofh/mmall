@@ -11,16 +11,17 @@ public class InterceptorRespoenUtli {
 
     /**
      * 以流方式发送json数据
+     *
      * @param response HttpServletResponse
-     * @param o java类型pojo
+     * @param o        java类型pojo
      */
-    public static void sendJson(HttpServletResponse response, Object o) {
+    public static <T> void sendJson(HttpServletResponse response, T o) {
         response.setContentType("application/json; charset=utf-8");
 
         try {
             PrintWriter writer = response.getWriter();
             // json数据写入到浏览器中
-            writer.append(JacksonUtli.objectToJson(o));
+            writer.append(JsonUtil.obj2String(o));
             writer.flush();
             writer.close();
         } catch (IOException e) {

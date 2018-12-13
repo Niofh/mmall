@@ -23,6 +23,8 @@ public class ManageInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
 
+
+
         // 判断cookies 是否存在token
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 

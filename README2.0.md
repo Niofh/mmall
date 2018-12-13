@@ -61,4 +61,18 @@
 1.linux是否开启外包连接redis https://blog.csdn.net/liuweixiao520/article/details/78216142
 
 
+### redis+nginx负载均衡+tomcat+cookies+session单点登录
+* JsonUtil.java 对json数据转换成String /String转换json
+* CookieUtil.java 对cookie封装，和运用了单点登录的domin,path
+* RedisPool.java jedis连接redis客户端
+* RedisPoolUtli.java
+* SessionExpireFilter.java 全局拦截器重置redis用户数据的过期时间
+
+
+### redis分布式
+
+
+
+
+
     

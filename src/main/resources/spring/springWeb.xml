@@ -74,6 +74,8 @@
 
         <mvc:interceptor>
             <!--后台管理系统拦截器-->
+            <!--manage/a.do   path=/manage/*-->
+            <!--manage/order/a.do   path=/manage/**-->
             <mvc:mapping path="/manage/**"/>
             <mvc:exclude-mapping path="/manage/user/login"/>
             <bean class="com.mmall.interceptor.ManageInterceptor"/>
