@@ -1,7 +1,6 @@
-package com.mmall.utli;
+package com.mmall.common.jedis;
 
 
-import com.mmall.common.RedisPool;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 
@@ -10,7 +9,7 @@ import redis.clients.jedis.Jedis;
  * 如果要适合redis3.0以上，查看单机和集群：https://blog.csdn.net/weixin_39509262/article/details/78095774
  */
 @Slf4j
-public class RedisPoolUtli {
+public class RedisPoolUtil  {
 
     /**
      * 字符串获取
@@ -124,8 +123,8 @@ public class RedisPoolUtli {
 
     public static void main(String[] args) {
 
-        RedisPoolUtli.set("testKey", "test");
-        log.info(RedisPoolUtli.get("testKey"));
+        RedisPoolUtil.set("testKey", "test");
+        log.info(RedisPoolUtil.get("testKey"));
 
     }
 }

@@ -1,4 +1,4 @@
-package com.mmall.common;
+package com.mmall.common.jedis;
 
 import com.mmall.utli.PropertiesUtil;
 import redis.clients.jedis.Jedis;

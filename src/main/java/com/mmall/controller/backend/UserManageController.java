@@ -6,7 +6,7 @@ import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.utli.CookieUtil;
 import com.mmall.utli.JsonUtil;
-import com.mmall.utli.RedisPoolUtli;
+import com.mmall.common.jedis.RedisPoolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +43,7 @@ public class UserManageController {
             // 多个系统登录成功，就要把seesid加入到cookies和redis当中
             String token = httpSession.getId();
             CookieUtil.writeLoginToken(response, token);
-            RedisPoolUtli.setEx(token, JsonUtil.obj2String(user), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+            RedisPoolUtil.setEx(token, JsonUtil.obj2String(user), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             return userServerResponse;
         }
         return ServerResponse.createByErrorMessage("该用户不是管理员,无法有访问权限");
