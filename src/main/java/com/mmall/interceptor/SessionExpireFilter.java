@@ -2,10 +2,10 @@ package com.mmall.interceptor;
 
 
 import com.mmall.common.Const;
+import com.mmall.common.jedis.RedisShardedPoolUtil;
 import com.mmall.pojo.User;
 import com.mmall.utli.CookieUtil;
 import com.mmall.utli.JsonUtil;
-import com.mmall.common.jedis.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
@@ -33,8 +33,15 @@ public class SessionExpireFilter implements Filter {
             String userData = RedisShardedPoolUtil.get(loginToken);
             User user = JsonUtil.string2Obj(userData, User.class);
             if (user != null) {
-                // 重置redis用户信息时间
-                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+
+                Long ttl = RedisShardedPoolUtil.ttl(loginToken);
+
+                if (ttl == null || ttl < 100) { // token时间快到期，重置redis过期时间
+                    // 重置redis用户信息时间
+                    RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                }
+
+
             }
 
         }
