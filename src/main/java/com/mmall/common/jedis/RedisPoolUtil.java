@@ -121,6 +121,28 @@ public class RedisPoolUtil  {
         return result;
     }
 
+
+    /**
+     * 判断redis key的剩余时间
+     * @param key
+     * @return
+     */
+    public static Long ttl(String key) {
+        Jedis jedis = null;
+        Long result = null;
+
+        try {
+            jedis = RedisPool.getJedis();
+            result = jedis.ttl(key);
+        } catch (Exception e) {
+            log.error("ttl key:{} value:{} error", key, e);
+            RedisPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisPool.returnResource(jedis);
+        return result;
+    }
+
     public static void main(String[] args) {
 
         RedisPoolUtil.set("testKey", "test");
