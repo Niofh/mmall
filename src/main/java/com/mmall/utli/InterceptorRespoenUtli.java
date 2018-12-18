@@ -16,7 +16,9 @@ public class InterceptorRespoenUtli {
      * @param o        java类型pojo
      */
     public static <T> void sendJson(HttpServletResponse response, T o) {
+        response.reset();
         response.setContentType("application/json; charset=utf-8");
+        response.setCharacterEncoding("UTF-8");
 
         try {
             PrintWriter writer = response.getWriter();
