@@ -77,7 +77,7 @@
             <!--manage/a.do   path=/manage/*-->
             <!--manage/order/a.do   path=/manage/**-->
             <mvc:mapping path="/manage/**"/>
-            <mvc:exclude-mapping path="/manage/user/login"/>
+            <!--<mvc:exclude-mapping path="/manage/user/login"/>-->
             <bean class="com.mmall.interceptor.ManageInterceptor"/>
         </mvc:interceptor>
 

@@ -79,4 +79,9 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     int updateProductStatus(@Param("productId") Integer productId, @Param("status")Integer status);
+
+    // 用Integer接受防止删除商品，数量返回null不会报错。
+    Integer selectProductStock(Integer productId);
+
+    int updateStockById(@Param("productId") Integer productId,@Param("totalStock") Integer totalStock);
 }

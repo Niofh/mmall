@@ -4,6 +4,7 @@ import com.mmall.pojo.Order;
 import com.mmall.pojo.OrderExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderMapper {
@@ -66,4 +67,7 @@ public interface OrderMapper {
     Order selectByOrderNoAndUserId(@Param("orderNo") Long orderNo,@Param("userId") Integer userId);
 
     Order selectByOrderNo(Long orderNo);
+
+
+    List<Order> selectByOrderStatusAndExpireTime(@Param("status") int status,@Param("expireTime") Date expireTime);
 }

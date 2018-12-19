@@ -2,9 +2,11 @@ package com.mmall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
+import com.mmall.pojo.Order;
 import com.mmall.vo.OrderProductVo;
 import com.mmall.vo.OrderVo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IOrderService {
@@ -95,6 +97,15 @@ public interface IOrderService {
      * @return
      */
     ServerResponse orderSendManager(Long orderNo);
+
+
+    /**
+     * 关闭订单 比如关闭当前时间前2小时的订单
+     * @param hour 时间。
+     * @return
+     */
+    void closeOrder(Integer hour);
+
 
 
 }

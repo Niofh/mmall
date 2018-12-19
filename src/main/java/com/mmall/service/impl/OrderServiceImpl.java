@@ -26,6 +26,7 @@ import com.mmall.vo.OrderProductVo;
 import com.mmall.vo.OrderVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -300,14 +301,14 @@ public class OrderServiceImpl implements IOrderService {
                 FastDFSClient fastDFSClient = new FastDFSClient();
                 String qrPath = null;
                 try {
-                     qrPath = fastDFSClient.uploadFileWithFilepath(filePath,null); // 二维码地址
+                    qrPath = fastDFSClient.uploadFileWithFilepath(filePath, null); // 二维码地址
                 } catch (FastDFSException e) {
                     e.printStackTrace();
                     return ServerResponse.createByError("上传二维码图片失败");
                 }
                 HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("orderNo",orderNo);
-                hashMap.put("qrUrl",imageHost+"/"+qrPath);
+                hashMap.put("orderNo", orderNo);
+                hashMap.put("qrUrl", imageHost + "/" + qrPath);
                 return ServerResponse.createBySuccess(hashMap);
 
             case FAILED:
@@ -338,20 +339,20 @@ public class OrderServiceImpl implements IOrderService {
 
 
         Order order = orderMapper.selectByOrderNo(out_trade_no);
-        if(order==null){
+        if (order == null) {
             return ServerResponse.createByErrorMessage("非快乐慕商城的订单,回调忽略");
         }
         BigDecimal payment = order.getPayment();
 
-        if(!(total_amount.equals(payment.toString()))){
+        if (!(total_amount.equals(payment.toString()))) {
             return ServerResponse.createByErrorMessage("这次订单的交易总金额不一致");
         }
 
-        if(order.getStatus()>=Const.OrderStatusEnum.PAID.getCode()){
+        if (order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()) {
             return ServerResponse.createByErrorMessage("支付宝重复调用");
         }
 
-        if(tradeStatus.equals(Const.AlipayCallback.TRADE_STATUS_TRADE_SUCCESS)){
+        if (tradeStatus.equals(Const.AlipayCallback.TRADE_STATUS_TRADE_SUCCESS)) {
             // 支付成功
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date gmt_payment = null;
@@ -389,10 +390,10 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public ServerResponse<Boolean> queryOrderPayStatus(Integer id, Long orderNo) {
         Order order = orderMapper.selectByOrderNoAndUserId(orderNo, id);
-        if(order==null){
+        if (order == null) {
             return ServerResponse.createByErrorMessage("用户没有该订单");
         }
-        if(order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()){
+        if (order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()) {
             return ServerResponse.createBySuccess(true);
         }
         return ServerResponse.createByError(false);
@@ -464,10 +465,51 @@ public class OrderServiceImpl implements IOrderService {
 
         int i = orderMapper.updateByPrimaryKeySelective(updateOrder);
         if (i > 0) {
-            return  ServerResponse.createBySuccess("发货成功");
+            return ServerResponse.createBySuccess("发货成功");
         }
 
         return ServerResponse.createByError("发货失败");
+    }
+
+    @Override
+    public void closeOrder(Integer hour) {
+
+        Date date = DateUtils.addHours(new Date(), -hour);
+
+        log.info("date", date);
+        // 查询（2）小时的未支付订单
+        List<Order> orderList = orderMapper.selectByOrderStatusAndExpireTime(Const.OrderStatusEnum.NO_PAY.getCode(), date);
+
+        for (Order order : orderList) {
+
+            Order o = new Order();
+            o.setId(order.getId());
+            o.setStatus(Const.OrderStatusEnum.ORDER_CLOSE.getCode());
+            // 把未支付而且过期时间订单状态改为已关闭
+            orderMapper.updateByPrimaryKeySelective(o);
+            log.info("关闭订单OrderNo：{}", order.getOrderNo());
+
+            Long orderNo = order.getOrderNo(); // 订单编号
+
+            List<OrderItem> orderItemList = orderItemMapper.selectOrderItemListByOrderNo(orderNo, null);
+            for (OrderItem orderItem : orderItemList) {
+
+                Integer productId = orderItem.getProductId();
+
+                // 查询库存中的商品数量。使用悲观锁中的行锁有id，防止表锁，防止数据库不一致问题。 FOR UPDATE
+                //一定要用主键where条件，防止锁表。同时必须是支持MySQL的InnoDB。
+                Integer stock = productMapper.selectProductStock(productId);
+                //考虑到已生成的订单里的商品，被删除的情况
+                if (stock == null) {
+                    continue;
+                }
+                // 更新产品库存
+                Integer quantity = orderItem.getQuantity();
+                Integer totalStock = stock + quantity;
+                productMapper.updateStockById(productId, totalStock);
+            }
+
+        }
     }
 
     private List<OrderVo> assembleOrderVoList(List<Order> orderList, Integer userId) {

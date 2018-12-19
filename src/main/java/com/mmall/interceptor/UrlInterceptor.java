@@ -23,12 +23,16 @@ public class UrlInterceptor implements HandlerInterceptor {
 
         log.info("requestURL = " + requestURL);
 
+
+        if (o instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) o;
             String methodName = handlerMethod.getMethod().getName();
             String className = handlerMethod.getBean().getClass().getName(); // 包含包名
 
             log.info("methodName = " + methodName);
             log.info("className = " + className);
+        }
+
 
 
         // 打印参数
