@@ -496,6 +496,7 @@ public class OrderServiceImpl implements IOrderService {
 
                 Integer productId = orderItem.getProductId();
 
+                // 因为库存表能多个人访问，所以对库存表进行行锁，防止数据不一致
                 // 查询库存中的商品数量。使用悲观锁中的行锁有id，防止表锁，防止数据库不一致问题。 FOR UPDATE
                 //一定要用主键where条件，防止锁表。同时必须是支持MySQL的InnoDB。
                 Integer stock = productMapper.selectProductStock(productId);
