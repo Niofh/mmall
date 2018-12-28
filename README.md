@@ -8,6 +8,8 @@
 2. 去掉xml底色问题 https://blog.csdn.net/qq_31156277/article/details/77802767 
 
 
+### linux软件安装
+https://juejin.im/post/5bbffc376fb9a05cd31edde4
 
 ### 慕课网mmall从零开发 V1.0
 

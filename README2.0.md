@@ -56,10 +56,14 @@
    * mvn clear package -Dmaven.test=true -P${deploy.type}; (deploy.dev是环境变量的dev或者prod)
    
    
-### redis
+### redis 2.8版本
 
 1.linux是否开启外包连接redis https://blog.csdn.net/liuweixiao520/article/details/78216142
+2. redis 打开服务 `./redis-server ../redis.conf & ` 后台启动
+3. 如果多个redis，需要修改redis的配置文件里的端口 (linux 复制一份redis `sudo cp -r redis/ redis1/`)
 
+### tomcat+nginx 负载均衡和集群
+https://www.cnblogs.com/yjq520/p/7685941.html
 
 ### redis+nginx负载均衡+tomcat+cookies+session单点登录
 * JsonUtil.java 对json数据转换成String /String转换json
@@ -69,9 +73,13 @@
 * SessionExpireFilter.java 全局拦截器重置redis用户数据的过期时间
 
 
-### redis分布式
+### redis分布式锁的使用
+* redission框架的分布式锁
 
-
+### 发布线上
+1. 准备2台tomcat 8080 8090
+2. 准备2台redis  6379 6380
+3. 修改shell自动化发布脚本，用变量执行代码
 
 
 
